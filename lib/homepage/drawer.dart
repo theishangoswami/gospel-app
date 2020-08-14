@@ -29,7 +29,7 @@ class DrawerScreen extends StatelessWidget {
             left: 32,
             bottom: 8,
             right: MediaQuery.of(context).size.width / 2.9),
-        color: Color(0xff454dff),
+        color: Color(0xff0a0548),
         child: Column(
           children: <Widget>[
             Row(
