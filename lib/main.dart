@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'homepage/home_page.dart';
 import 'onboarding_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'provider/drawer_controller.dart';
 
 int initScreen;
 
@@ -14,21 +16,46 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
+  MenuController menuController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    menuController = new MenuController(
+      vsync: this,
+    )..addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    menuController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Gospel',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: Color(0xFFFFFFFF),
-        primaryColor: Color(0xFF00ffa4),
+    return ChangeNotifierProvider(
+      builder: (_)=> menuController,
+      child: MaterialApp(
+        title: 'Gospel',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          scaffoldBackgroundColor: Color(0xFFFFFFFF),
+          primaryColor: Color(0xFF00ffa4),
+        ),
+        initialRoute: initScreen == 0 || initScreen == null ? "first" : "/",
+        routes: {
+          '/': (context) => HomePage(),
+          "first": (context) => Onboarding(),
+        },
       ),
-      initialRoute: initScreen == 0 || initScreen == null ? "first" : "/",
-      routes: {
-        '/': (context) => HomePage(),
-        "first": (context) => Onboarding(),
-      },
     );
   }
 }
