@@ -47,6 +47,12 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
       child: MaterialApp(
         title: 'Gospel',
         debugShowCheckedModeBanner: false,
+        builder: (context, child) {
+          return ScrollConfiguration(
+            behavior: AppScrollBehavior(),
+            child: child,
+          );
+        },
         theme: ThemeData(
           scaffoldBackgroundColor: Color(0xFFFFFFFF),
           primaryColor: Color(0xFF00ffa4),
@@ -58,5 +64,13 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         },
       ),
     );
+  }
+}
+
+class AppScrollBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
   }
 }
