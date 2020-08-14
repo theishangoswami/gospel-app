@@ -60,6 +60,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.width;
     return GestureDetector(
       onPanUpdate: (details) {
         //on swiping left
@@ -78,12 +79,22 @@ class _DrawerScreenState extends State<DrawerScreen> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: Icon(
-                    Icons.image
-                  )
+                Container(
+                  height: height*0.2,
+                  width: height*0.2,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 2
+                    ),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(imageUrl)
+                    )
+                  ),
                 ),
+                SizedBox(width: height*0.02,),
                 Text(
                   'Tatiana',
                   style: TextStyle(

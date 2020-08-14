@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
               ),
               child: IconButton(
                 icon: Transform.translate(
-                  offset: Offset(-1, -1),
+                  offset: Offset(-1.5, -1),
                   child: AnimatedIcon(
                     icon: AnimatedIcons.menu_close,
                     progress: _animationController,
