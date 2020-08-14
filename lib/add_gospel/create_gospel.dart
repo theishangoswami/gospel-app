@@ -51,6 +51,7 @@ class CreateGospel extends StatelessWidget {
                   ),
                   child: TextFormField(
                     maxLines: 10,
+                    maxLength: 150,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white
