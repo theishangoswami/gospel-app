@@ -156,6 +156,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1+1"
+  share:
+    dependency: "direct main"
+    description:
+      path: "packages/share"
+      ref: HEAD
+      resolved-ref: "1494b043d03799dd14e689552d1218918435f9f5"
+      url: "git://github.com/himanshusharma89/plugins.git"
+    source: git
+    version: "0.6.2+1"
   shared_preferences:
     dependency: "direct main"
     description:

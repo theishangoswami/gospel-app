@@ -1,18 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:gospel/provider/drawer_controller.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
-class DrawerScreen extends StatelessWidget {
+class DrawerScreen extends StatefulWidget {
+  final BuildContext context;
+  
+  DrawerScreen(this.context);
+
+  @override
+  _DrawerScreenState createState() => _DrawerScreenState();
+}
+
+class _DrawerScreenState extends State<DrawerScreen> {
   final String imageUrl =
       "https://celebritypets.net/wp-content/uploads/2016/12/Adriana-Lima.jpg";
 
-  final List<MenuItem> options = [
-    MenuItem(Icons.search, 'Search'),
-    MenuItem(Icons.shopping_basket, 'Basket'),
-    MenuItem(Icons.favorite, 'Discounts'),
-    MenuItem(Icons.code, 'Prom-codes'),
-    MenuItem(Icons.format_list_bulleted, 'Orders'),
+    List<MenuItem> options;
+
+  @override
+  void initState() {
+    super.initState();
+    options = [
+    MenuItem(
+      icon: Icons.search, 
+      title: 'Search',
+      onTap: (){}
+    ),
+    MenuItem(
+      icon: Icons.info, 
+      title: 'About Us',
+      onTap: (){}
+    ),
+    MenuItem(
+      icon: Icons.favorite, 
+      title: 'Spread the Gospel',
+      onTap: _share
+    ),
+    MenuItem(
+      icon: Icons.code, 
+      title: 'License',
+      onTap: (){}
+    ),
+    MenuItem(
+      icon: Icons.rate_review, 
+      title: 'Rate Us',
+      onTap: (){}
+    ),
   ];
+  }
+
+  _share(){
+    final RenderBox box = widget.context.findRenderObject();
+    Share.share(
+      'Checkout the Gospel App!',
+      sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +109,7 @@ class DrawerScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
+                  onTap: item.onTap,
                 );
               }).toList(),
             ),
@@ -99,6 +144,7 @@ class DrawerScreen extends StatelessWidget {
 class MenuItem {
   String title;
   IconData icon;
+  Function onTap;
 
-  MenuItem(this.icon, this.title);
+  MenuItem({this.icon, this.title, this.onTap});
 }
