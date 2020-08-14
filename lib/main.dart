@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gospel/add_gospel/create_gospel.dart';
 import 'package:provider/provider.dart';
 import 'homepage/home_page.dart';
 import 'onboarding_screen.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
+class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   MenuController menuController;
 
   @override
@@ -42,7 +43,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      builder: (_)=> menuController,
+      builder: (_) => menuController,
       child: MaterialApp(
         title: 'Gospel',
         debugShowCheckedModeBanner: false,

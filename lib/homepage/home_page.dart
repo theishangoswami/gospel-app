@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:gospel/add_gospel/create_gospel.dart';
 import 'package:gospel/homepage/drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:gospel/provider/drawer_controller.dart';
@@ -10,8 +11,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
-
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   AnimationController _animationController;
   bool isMenu;
 
@@ -27,8 +27,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   @override
   void initState() {
     super.initState();
-    isMenu=false;
-    _animationController = AnimationController(vsync: this,duration: Duration(milliseconds: 300));
+    isMenu = false;
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _pageController = PageController();
   }
 
@@ -42,23 +43,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [
-        drawerScreen(),
-        homeScreen()
-      ],
+      children: [drawerScreen(), homeScreen()],
     );
   }
 
   void _handleOnPressed() {
     setState(() {
       isMenu = !isMenu;
-      isMenu
-          ? _animationController.forward()
-          : _animationController.reverse();
+      isMenu ? _animationController.forward() : _animationController.reverse();
     });
   }
 
-  Widget homeScreen(){
+  Widget homeScreen() {
     final width = MediaQuery.of(context).size.width;
     return zoomAndSlideContent(
       Scaffold(
@@ -73,116 +69,114 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
           leading: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(0, 1),
-                    blurRadius: 3,
-                    color: const Color(0xff0a0548).withOpacity(0.6)
-                  )
-                ]
-              ),
-              child: IconButton(
-                icon: Transform.translate(
-                  offset: Offset(-1.5, -1),
-                  child: AnimatedIcon(
-                    icon: AnimatedIcons.menu_close,
-                    progress: _animationController,
-                  ),
-                ),
-                onPressed: (){
-                  _handleOnPressed();
-                  Provider.of<MenuController>(context, listen: true).toggle();
-                }
-              )
-            ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                          offset: Offset(0, 1),
+                          blurRadius: 3,
+                          color: const Color(0xff0a0548).withOpacity(0.6))
+                    ]),
+                child: IconButton(
+                    icon: Transform.translate(
+                      offset: Offset(-1.5, -1),
+                      child: AnimatedIcon(
+                        icon: AnimatedIcons.menu_close,
+                        progress: _animationController,
+                      ),
+                    ),
+                    onPressed: () {
+                      _handleOnPressed();
+                      Provider.of<MenuController>(context, listen: true)
+                          .toggle();
+                    })),
           ),
           actions: [
             SizedBox(),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
-                width: width*0.09,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(0, 1),
-                      blurRadius: 3,
-                      color: const Color(0xff0a0548).withOpacity(0.6)
-                    )
-                  ]
-                ),
-                child: IconButton(
-                  icon: Transform.translate(
-                    offset: Offset(-1, -1),
-                    child: Icon(
-                    Icons.image,
-                      size: 22,
-                      color: Color(0xFF0a0548),
-                    ),
-                  ),
-                  onPressed: (){}
-                )
-              ),
+                  width: width * 0.09,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 1),
+                            blurRadius: 3,
+                            color: const Color(0xff0a0548).withOpacity(0.6))
+                      ]),
+                  child: IconButton(
+                      icon: Transform.translate(
+                        offset: Offset(-1, -1),
+                        child: Icon(
+                          Icons.image,
+                          size: 22,
+                          color: Color(0xFF0a0548),
+                        ),
+                      ),
+                      onPressed: () {})),
             ),
           ],
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: new FloatingActionButton(
           child: new Icon(
             Icons.add,
             size: 30,
           ),
           backgroundColor: Color(0xFF0a0548),
-          onPressed: () {},
+          onPressed: () => {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => CreateGospel(),
+              ),
+            ),
+          },
         ),
         body: Column(
           children: [
             _buildMenuBar(context),
             Expanded(
-              flex: 2,
-              child: PageView(
-                controller: _pageController,
-                onPageChanged: (i) {
-                  if (i == 0) {
-                    setState(() {
-                      right = Colors.white;
-                      left = Colors.black;
-                      // nullifyFields();
-                    });
-                  } else if (i == 1) {
-                    setState(() {
-                      right = Colors.black;
-                      left = Colors.white;
-                      // nullifyFields();
-                    });
-                  }
-                },
-                children: <Widget>[
-                  ConstrainedBox(
-                    constraints: const BoxConstraints.expand(),
-                    // The login/ sign in screen
-                    child: _buildHot(context),
-                  ),
-                  ConstrainedBox(
-                    constraints: const BoxConstraints.expand(),
-                    // the sign up screen
-                    child: _buildFresh(context),
-                  ),
-                ],
-              )
-            )
+                flex: 2,
+                child: PageView(
+                  controller: _pageController,
+                  onPageChanged: (i) {
+                    if (i == 0) {
+                      setState(() {
+                        right = Colors.white;
+                        left = Colors.black;
+                        // nullifyFields();
+                      });
+                    } else if (i == 1) {
+                      setState(() {
+                        right = Colors.black;
+                        left = Colors.white;
+                        // nullifyFields();
+                      });
+                    }
+                  },
+                  children: <Widget>[
+                    ConstrainedBox(
+                      constraints: const BoxConstraints.expand(),
+                      // The login/ sign in screen
+                      child: _buildHot(context),
+                    ),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints.expand(),
+                      // the sign up screen
+                      child: _buildFresh(context),
+                    ),
+                  ],
+                ))
           ],
         ),
       ),
     );
   }
 
-  Widget drawerScreen(){
+  Widget drawerScreen() {
     return Container(
       child: Scaffold(
         body: DrawerScreen(context),
@@ -244,66 +238,66 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   }
 
   Widget _buildMenuBar(BuildContext context) {
-      return Container(
-        width: 288,
-        height: 40,
-        decoration: BoxDecoration(
-          color: const Color(0xff0a0548),
-          borderRadius: BorderRadius.all(Radius.circular(25.0)),
-        ),
-        alignment: Alignment.center,
-        // Using custom paint to create the UI
-        child: CustomPaint(
-          // Call to the UI
-          painter: TabIndicationPainter(pageController: _pageController),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Expanded(
-                child: FlatButton(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onPressed: () {
-                    //OnPressed changing the previous focus
-                    FocusScope.of(context).unfocus();
-                    // Navigating to SignIn
-                    _onHotButtonPress();
-                  },
-                  child: Text(
-                    "Hot",
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color: left,
-                      fontSize: 16.0,
-                    ),
+    return Container(
+      width: 288,
+      height: 40,
+      decoration: BoxDecoration(
+        color: const Color(0xff0a0548),
+        borderRadius: BorderRadius.all(Radius.circular(25.0)),
+      ),
+      alignment: Alignment.center,
+      // Using custom paint to create the UI
+      child: CustomPaint(
+        // Call to the UI
+        painter: TabIndicationPainter(pageController: _pageController),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Expanded(
+              child: FlatButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onPressed: () {
+                  //OnPressed changing the previous focus
+                  FocusScope.of(context).unfocus();
+                  // Navigating to SignIn
+                  _onHotButtonPress();
+                },
+                child: Text(
+                  "Hot",
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    color: left,
+                    fontSize: 16.0,
                   ),
                 ),
               ),
-              Expanded(
-                child: FlatButton(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onPressed: () {
-                    //OnPressed changing the previous focus
-                    FocusScope.of(context).unfocus();
-                    // Navigating to SignUp
-                    _onFreshButtonPress();
-                  },
-                  child: Text(
-                    "Fresh",
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color: right,
-                      fontSize: 16.0,
-                    ),
+            ),
+            Expanded(
+              child: FlatButton(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onPressed: () {
+                  //OnPressed changing the previous focus
+                  FocusScope.of(context).unfocus();
+                  // Navigating to SignUp
+                  _onFreshButtonPress();
+                },
+                child: Text(
+                  "Fresh",
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    color: right,
+                    fontSize: 16.0,
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      );
-    }
+      ),
+    );
+  }
 
   void _onHotButtonPress() {
     _pageController.animateToPage(0,
