@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gospel/add_gospel/create_gospel.dart';
+import 'package:gospel/fade_transition.dart';
 import 'package:gospel/homepage/drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:gospel/provider/drawer_controller.dart';
+import 'package:gospel/app_theme.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -58,7 +60,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final width = MediaQuery.of(context).size.width;
     return zoomAndSlideContent(
       Scaffold(
-        backgroundColor: const Color(0xFF00ffa4),
+        backgroundColor: AppTheme.green,
         appBar: AppBar(
           elevation: 0,
           centerTitle: true,
@@ -76,7 +78,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       BoxShadow(
                           offset: Offset(0, 1),
                           blurRadius: 3,
-                          color: const Color(0xff0a0548).withOpacity(0.6))
+                          color: AppTheme.blue.withOpacity(0.6))
                     ]),
                 child: IconButton(
                     icon: Transform.translate(
@@ -93,7 +95,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     })),
           ),
           actions: [
-            SizedBox(),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
@@ -105,7 +106,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         BoxShadow(
                             offset: Offset(0, 1),
                             blurRadius: 3,
-                            color: const Color(0xff0a0548).withOpacity(0.6))
+                            color: AppTheme.blue.withOpacity(0.6))
                       ]),
                   child: IconButton(
                       icon: Transform.translate(
@@ -113,7 +114,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         child: Icon(
                           Icons.image,
                           size: 22,
-                          color: Color(0xFF0a0548),
+                          color: AppTheme.blue,
                         ),
                       ),
                       onPressed: () {})),
@@ -126,13 +127,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             Icons.add,
             size: 30,
           ),
-          backgroundColor: Color(0xFF0a0548),
-          onPressed: () => {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => CreateGospel(),
-              ),
-            ),
+          backgroundColor: AppTheme.blue,
+          onPressed: () {
+            Navigator.of(context).push(FadeRoute(page: CreateGospel()));
           },
         ),
         body: Column(
@@ -242,7 +239,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       width: 288,
       height: 40,
       decoration: BoxDecoration(
-        color: const Color(0xff0a0548),
+        color: AppTheme.blue,
         borderRadius: BorderRadius.all(Radius.circular(25.0)),
       ),
       alignment: Alignment.center,
@@ -311,7 +308,76 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget _buildHot(BuildContext context) {
-    return Column();
+    final width = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      child: ListView.builder(
+        itemCount: 5,
+        itemBuilder: (_,index){
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0, 3),
+                    blurRadius: 5
+                  )
+                ]
+                // border: Border(
+                //   top: BorderSide(
+                //     color: Colors.grey,
+                //     width: 0.5
+                //   ),
+                //   bottom: BorderSide(
+                //     color: Colors.grey,
+                //     width: 0.5
+                //   )
+                // )
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                child: Row(
+                  children: [
+                    Center(
+                      child: Icon(
+                        Icons.favorite_border,
+                      ),
+                    ),
+                    SizedBox(width: width*0.05,),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Gospel Title',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          SizedBox(height: width*0.02,),
+                          Text(
+                            'Gospel Owner',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              // fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ),
+          );
+        }
+      ),
+    );
   }
 
   Widget _buildFresh(BuildContext context) {
