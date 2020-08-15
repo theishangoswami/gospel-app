@@ -1,4 +1,4 @@
-package com.example.gospel
+package gospel.app.gospelappproject
 
 import io.flutter.embedding.android.FlutterActivity
 
