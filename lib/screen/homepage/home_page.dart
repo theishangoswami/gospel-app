@@ -316,8 +316,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      child: StreamBuilder(
-        stream: DatabaseService.getFeedPosts(Provider.of<UserData>(context, listen: false).currentUserId),
+      child: FutureBuilder(
+        future: DatabaseService.getUserPosts(Provider.of<UserData>(context, listen: false).currentUserId),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
