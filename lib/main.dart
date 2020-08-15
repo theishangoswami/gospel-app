@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gospel/model/user_data.dart';
 import 'package:provider/provider.dart';
 import 'screen/homepage/home_page.dart';
 import 'screen/onboarding_screen.dart';
@@ -13,7 +14,16 @@ Future<void> main() async {
   initScreen = prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 1);
   print('initScreen $initScreen');
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<UserData>(
+          create: (context) => UserData(),
+        ),
+      ],
+      child: MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatefulWidget {

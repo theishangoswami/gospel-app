@@ -1,8 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:gospel/model/post.dart';
+import 'package:gospel/model/user_data.dart';
 import 'package:gospel/screen/gospel/create_gospel.dart';
 import 'package:gospel/screen/gospel/view_gospel.dart';
+import 'package:gospel/services/database_service.dart';
 import 'package:gospel/util/fade_transition.dart';
 import 'package:gospel/screen/homepage/drawer.dart';
 import 'package:like_button/like_button.dart';
@@ -32,6 +35,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     isMenu = false;
+    print("HOME SCREEN:" +Provider.of<UserData>(context, listen: false).currentUserId);
+    // print("HOME SCREEN:" + globals.prefs.getString('userId'));
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _pageController = PageController();
@@ -92,7 +97,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ),
                     onPressed: () {
                       _handleOnPressed();
-                      Provider.of<MenuController>(context, listen: true)
+                      Provider.of<MenuController>(context, listen: false)
                           .toggle();
                     })),
           ),
@@ -159,12 +164,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   children: <Widget>[
                     ConstrainedBox(
                       constraints: const BoxConstraints.expand(),
-                      // The login/ sign in screen
                       child: _buildHot(context),
                     ),
                     ConstrainedBox(
                       constraints: const BoxConstraints.expand(),
-                      // the sign up screen
                       child: _buildFresh(context),
                     ),
                   ],
@@ -313,76 +316,110 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      child: ListView.builder(
-        itemCount: 5,
-        itemBuilder: (_,index){
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(FadeRoute(page: ViewGospel()));
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0, 3),
-                      blurRadius: 5
-                    )
-                  ]
-                  // border: Border(
-                  //   top: BorderSide(
-                  //     color: Colors.grey,
-                  //     width: 0.5
-                  //   ),
-                  //   bottom: BorderSide(
-                  //     color: Colors.grey,
-                  //     width: 0.5
-                  //   )
-                  // )
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                  child: Row(
-                    children: [
-                      Center(
-                        child: LikeButton(
-                          size: 25,
-                          onTap: onLikeButtonTapped,
+      child: StreamBuilder(
+        stream: DatabaseService.getFeedPosts(Provider.of<UserData>(context, listen: false).currentUserId),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          } 
+          else{
+            final List<Post> posts = snapshot.data;
+            return ListView.builder(
+            itemCount: posts.length,
+            itemBuilder: (_,index){
+              Post post = posts[index];
+              print(post);
+              return FutureBuilder(
+                future: DatabaseService.getUserWithId(post.opId),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(child: CircularProgressIndicator());
+                  } 
+                  else{
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(FadeRoute(page: ViewGospel()));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              offset: Offset(0, 3),
+                              blurRadius: 5
+                            )
+                          ]
+                          // border: Border(
+                          //   top: BorderSide(
+                          //     color: Colors.grey,
+                          //     width: 0.5
+                          //   ),
+                          //   bottom: BorderSide(
+                          //     color: Colors.grey,
+                          //     width: 0.5
+                          //   )
+                          // )
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                          child: Row(
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  LikeButton(
+                                    size: 25,
+                                    onTap: onLikeButtonTapped,
+                                  ),
+                                  Text(
+                                    post.likes.toString(),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(width: width*0.05,),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      post.title,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                    SizedBox(height: width*0.02,),
+                                    Text(
+                                      post.op,
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        // fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         )
                       ),
-                      SizedBox(width: width*0.05,),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Gospel Title',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                            SizedBox(height: width*0.02,),
-                            Text(
-                              'Gospel Owner',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                // fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ),
-            ),
+                    ),
+                  );
+                  }
+                }
+              );
+            }
           );
+          }
         }
       ),
     );

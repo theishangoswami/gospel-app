@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:gospel/screen/homepage/home_page.dart';
-import 'package:gospel/screen/sign_in.dart';
+import 'package:gospel/auth/sign_in.dart';
+import 'package:gospel/util/fade_transition.dart';
+import 'package:gospel/util/loader.dart';
 
 var color1 = Color(0xFF0a0548);
 var color2 = Color(0xff00ffa4);
 var color3 = Color(0xFF0a0548);
+
+final AuthService authService = AuthService();
 
 List<String> image = [
   'assets/lightning.png',
@@ -84,13 +88,10 @@ class _OnboardingState extends State<Onboarding> {
                   child: MaterialButton(
                     color: Color(0xFF00ffa4),
                     onPressed: () {
-                      signInWithGoogle().whenComplete(() {
+                      Navigator.of(context).push(FadeRoute(page: Loader()));
+                      authService.signInWithGoogle(context).whenComplete(() {
                         Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return HomePage();
-                            },
-                          ),
+                          FadeRoute(page: HomePage()),
                         );
                       });
                     },

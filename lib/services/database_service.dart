@@ -29,6 +29,16 @@ class DatabaseService{
       'timestamp': post.timestamp,
     });
   }
+
+  static Stream<List<Post>> getFeedPosts(String userId) {
+    return feedsRef
+        .document(userId)
+        .collection('userFeed')
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map((snapshot) =>
+            snapshot.documents.map((doc) => Post.fromDoc(doc)).toList());
+  }
   
   static Future<List<Post>> getUserPosts(String userId) async {
     QuerySnapshot userPostsSnapshot = await postsRef
