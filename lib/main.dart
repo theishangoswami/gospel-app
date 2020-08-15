@@ -5,14 +5,14 @@ import 'screen/onboarding_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'provider/drawer_controller.dart';
 
-int initScreen;
+var initScreen;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  initScreen = await prefs.getInt("initScreen");
+  initScreen = prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 1);
-  print('initScreen ${initScreen}');
+  print('initScreen $initScreen');
   runApp(MyApp());
 }
 

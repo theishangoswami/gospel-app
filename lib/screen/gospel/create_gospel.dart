@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gospel/util/app_theme.dart';
 
-class CreateGospel extends StatelessWidget {
+class CreateGospel extends StatefulWidget {
 
+  @override
+  _CreateGospelState createState() => _CreateGospelState();
+}
+
+class _CreateGospelState extends State<CreateGospel> {
   List rules = [
     'With great power comes great responsibilty.',
     'Be polite and do not abuse other!',
