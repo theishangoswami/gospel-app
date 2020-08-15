@@ -12,6 +12,7 @@ class ViewGospel extends StatefulWidget {
 class _ViewGospelState extends State<ViewGospel> {
 
   TextEditingController _textEditingController;
+  List comments = [];
 
   @override
   void initState() {
@@ -115,7 +116,7 @@ class _ViewGospelState extends State<ViewGospel> {
                           ),
                         ),
                       ),
-                      Divider()
+                      Divider(),
                     ],
                   ),
                 ),

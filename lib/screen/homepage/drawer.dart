@@ -65,7 +65,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
       onPanUpdate: (details) {
         //on swiping left
         if (details.delta.dx < -6) {
-          Provider.of<MenuController>(context, listen: true).toggle();
+          Provider.of<MenuController>(context, listen: false).toggle();
         }
       },
       child: Container(
