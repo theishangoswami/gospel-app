@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "477857628133",
+    "firebase_url": "https://app-for-gospel.firebaseio.com",
+    "project_id": "app-for-gospel",
+    "storage_bucket": "app-for-gospel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:477857628133:android:38115f333991c79809f90c",
+        "android_client_info": {
+          "package_name": "gospel.app.gospelappproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "477857628133-tssv5neuib51fbt74c7k8jptlq0p7vgs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "gospel.app.gospelappproject",
+            "certificate_hash": "3170047cb974c61e030402159ab0c74158413b7b"
+          }
+        },
+        {
+          "client_id": "477857628133-htkl2p46emu2bc8a01uetrurtmd209fp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjxqRKoF3OP-WztHQ4w1hEhRrDg5zMcaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477857628133-htkl2p46emu2bc8a01uetrurtmd209fp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
