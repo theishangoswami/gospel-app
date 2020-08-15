@@ -333,7 +333,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 future: DatabaseService.getUserWithId(post.opId),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return Center(child: CircularProgressIndicator());
+                    return Center();
                   } 
                   else{
                   return Padding(
