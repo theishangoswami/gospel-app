@@ -29,7 +29,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   firebase_core: ^0.4.0+9
   firebase_analytics: ^5.0.2
-  firebase_auth: ^0.14.0+5
+  firebase_auth: ^0.16.0
   cloud_firestore: ^0.12.9+5
   firebase_storage: ^3.1.6
   cupertino_icons: ^0.1.3
@@ -41,8 +41,7 @@ dependencies:
       url: git://github.com/himanshusharma89/plugins.git
       path: packages/share
   like_button: ^1.0.1
-  firebase_auth: ^0.16.0
-  google_sign_in: ^4.4.4
+  google_sign_in: ^4.5.1
 
 dev_dependencies:
   flutter_test:

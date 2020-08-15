@@ -27,22 +27,21 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
-    menuController = new MenuController(
+    menuController = MenuController(
       vsync: this,
     )..addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
-    menuController.dispose();
     super.dispose();
+    menuController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => menuController,
+    return ChangeNotifierProvider.value(
+      value: menuController,
       child: MaterialApp(
         title: 'Gospel',
         debugShowCheckedModeBanner: false,
