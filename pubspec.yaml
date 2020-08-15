@@ -36,6 +36,8 @@ dependencies:
       url: git://github.com/himanshusharma89/plugins.git
       path: packages/share
   like_button: ^1.0.1
+  firebase_auth: ^0.16.0
+  google_sign_in: ^4.4.4
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:gospel/screen/homepage/home_page.dart';
+import 'package:gospel/screen/sign_in.dart';
 
 var color1 = Color(0xFF0a0548);
 var color2 = Color(0xff00ffa4);
@@ -82,14 +84,22 @@ class _OnboardingState extends State<Onboarding> {
                   child: MaterialButton(
                     color: Color(0xFF00ffa4),
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/');
+                      signInWithGoogle().whenComplete(() {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return HomePage();
+                            },
+                          ),
+                        );
+                      });
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                     padding: EdgeInsets.symmetric(horizontal: 90, vertical: 15),
                     child: Text(
-                      "Let's Continue",
+                      "Sign in with Google",
                       style: TextStyle(
                         color: Color(0xFF0a0548),
                         fontWeight: FontWeight.bold,
