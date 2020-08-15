@@ -35,6 +35,7 @@ dependencies:
     git:
       url: git://github.com/himanshusharma89/plugins.git
       path: packages/share
+  like_button: ^1.0.1
 
 dev_dependencies:
   flutter_test:

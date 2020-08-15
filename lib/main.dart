@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gospel/add_gospel/create_gospel.dart';
 import 'package:provider/provider.dart';
-import 'homepage/home_page.dart';
-import 'onboarding_screen.dart';
+import 'screen/homepage/home_page.dart';
+import 'screen/onboarding_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'provider/drawer_controller.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gospel/app_theme.dart';
+import 'package:gospel/util/app_theme.dart';
 
 class CreateGospel extends StatelessWidget {
 
@@ -49,17 +49,25 @@ class CreateGospel extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6),
                     color: AppTheme.blue.withOpacity(0.8)
                   ),
-                  child: TextFormField(
-                    maxLines: 10,
-                    maxLength: 150,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white
-                    ),
-                    cursorColor: AppTheme.blue,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: TextFormField(
+                      maxLines: 10,
+                      maxLength: 180,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white
+                      ),
+                      keyboardType: TextInputType.text,
+                      cursorColor: Colors.white,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                        helperStyle: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -121,7 +129,7 @@ class CreateGospel extends StatelessWidget {
                     ),
                     SizedBox(height: height*0.01,),
                     Text(
-                      'ADD GOSPEL',
+                      'POST',
                       style: TextStyle(
                         fontSize: 14,
                         color: AppTheme.blue

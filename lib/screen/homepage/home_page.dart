@@ -1,12 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gospel/add_gospel/create_gospel.dart';
-import 'package:gospel/fade_transition.dart';
-import 'package:gospel/homepage/drawer.dart';
+import 'package:gospel/screen/gospel/create_gospel.dart';
+import 'package:gospel/screen/gospel/view_gospel.dart';
+import 'package:gospel/util/fade_transition.dart';
+import 'package:gospel/screen/homepage/drawer.dart';
+import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
 import 'package:gospel/provider/drawer_controller.dart';
-import 'package:gospel/app_theme.dart';
+import 'package:gospel/util/app_theme.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -316,63 +318,69 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         itemBuilder: (_,index){
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 2),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(0, 3),
-                    blurRadius: 5
-                  )
-                ]
-                // border: Border(
-                //   top: BorderSide(
-                //     color: Colors.grey,
-                //     width: 0.5
-                //   ),
-                //   bottom: BorderSide(
-                //     color: Colors.grey,
-                //     width: 0.5
-                //   )
-                // )
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                child: Row(
-                  children: [
-                    Center(
-                      child: Icon(
-                        Icons.favorite_border,
-                      ),
-                    ),
-                    SizedBox(width: width*0.05,),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Gospel Title',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                          SizedBox(height: width*0.02,),
-                          Text(
-                            'Gospel Owner',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              // fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ],
-                      ),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(FadeRoute(page: ViewGospel()));
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0, 3),
+                      blurRadius: 5
                     )
-                  ],
+                  ]
+                  // border: Border(
+                  //   top: BorderSide(
+                  //     color: Colors.grey,
+                  //     width: 0.5
+                  //   ),
+                  //   bottom: BorderSide(
+                  //     color: Colors.grey,
+                  //     width: 0.5
+                  //   )
+                  // )
                 ),
-              )
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                  child: Row(
+                    children: [
+                      Center(
+                        child: LikeButton(
+                          size: 25,
+                          onTap: onLikeButtonTapped,
+                        )
+                      ),
+                      SizedBox(width: width*0.05,),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Gospel Title',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            SizedBox(height: width*0.02,),
+                            Text(
+                              'Gospel Owner',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                // fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ),
             ),
           );
         }
@@ -382,6 +390,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Widget _buildFresh(BuildContext context) {
     return Column();
+  }
+
+  Future<bool> onLikeButtonTapped(bool isLiked) async{
+    /// send your request here
+    // final bool success= await sendRequest();
+
+    /// if failed, you can do nothing
+    // return success? !isLiked:isLiked;
+
+    return !isLiked;
   }
 }
 
