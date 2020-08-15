@@ -340,7 +340,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     padding: const EdgeInsets.symmetric(vertical: 2),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(FadeRoute(page: ViewGospel()));
+                        Navigator.of(context).push(FadeRoute(page: ViewGospel(post: post,)));
                       },
                       child: Container(
                         decoration: BoxDecoration(
