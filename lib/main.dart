@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      builder: (_) => menuController,
+      create: (_) => menuController,
       child: MaterialApp(
         title: 'Gospel',
         debugShowCheckedModeBanner: false,
