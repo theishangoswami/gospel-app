@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "477857628133-osgrpfonfeiknjrat7lmjg3j184sqspp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "gospel.app.gospelappproject",
+            "certificate_hash": "c7de0341601d45f7876b08f9784538a28ebbfc8a"
+          }
+        },
+        {
           "client_id": "477857628133-tssv5neuib51fbt74c7k8jptlq0p7vgs.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

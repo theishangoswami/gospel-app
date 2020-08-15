@@ -14,16 +14,14 @@ Future<void> main() async {
   initScreen = prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 1);
   print('initScreen $initScreen');
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider<UserData>(
-          create: (context) => UserData(),
-        ),
-      ],
-      child: MyApp(),
-    )
-  );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<UserData>(
+        create: (context) => UserData(),
+      ),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {

@@ -10,6 +10,7 @@ var color2 = Color(0xff00ffa4);
 var color3 = Color(0xFF0a0548);
 
 final AuthService authService = AuthService();
+String dropdownValue;
 
 List<String> image = [
   'assets/lightning.png',
@@ -85,30 +86,79 @@ class _OnboardingState extends State<Onboarding> {
           carouselIndex == 2
               ? Positioned(
                   bottom: 50,
-                  child: MaterialButton(
-                    color: Color(0xFF00ffa4),
-                    onPressed: () {
-                      Navigator.of(context).push(FadeRoute(page: Loader()));
-                      authService.signInWithGoogle(context).whenComplete(() {
-                        Navigator.of(context).push(
-                          FadeRoute(page: HomePage()),
-                        );
-                      });
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 90, vertical: 15),
-                    child: Text(
-                      "Sign in with Google",
-                      style: TextStyle(
-                        color: Color(0xFF0a0548),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                  child: Column(
+                    children: <Widget>[
+                      DropdownButton<String>(
+                        value: dropdownValue,
+                        dropdownColor: Color(0xFF0a0548),
+                        hint: Text(
+                          "  Select College or University ",
+                          style: TextStyle(
+                            color: Color(0xFF00ffa4),
+                            fontSize: 20,
+                          ),
+                        ),
+                        icon: Icon(
+                          Icons.arrow_downward,
+                          color: Color(0xFFffffff),
+                        ),
+                        iconSize: 24,
+                        elevation: 16,
+                        style: TextStyle(
+                          color: Color(0xFF00ffa4),
+                        ),
+                        underline: Container(
+                          height: 2,
+                          color: Color(0xFF00ffa4),
+                        ),
+                        onChanged: (String newValue) {
+                          setState(() {
+                            dropdownValue = newValue;
+                          });
+                        },
+                        items: <String>[
+                          'Harvard University',
+                          'Garuda College',
+                          'Wharton School',
+                          'Delhi University'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       ),
-                    ),
-                  ),
-                )
+                      SizedBox(
+                        height: 10,
+                      ),
+                      MaterialButton(
+                        color: Color(0xFF00ffa4),
+                        onPressed: () {
+                          Navigator.of(context).push(FadeRoute(page: Loader()));
+                          authService
+                              .signInWithGoogle(context)
+                              .whenComplete(() {
+                            Navigator.of(context).push(
+                              FadeRoute(page: HomePage()),
+                            );
+                          });
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 90, vertical: 15),
+                        child: Text(
+                          "Sign in with Google",
+                          style: TextStyle(
+                            color: Color(0xFF0a0548),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ))
               : Positioned(
                   bottom: 80,
                   child: Row(

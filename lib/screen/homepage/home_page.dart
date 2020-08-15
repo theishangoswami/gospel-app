@@ -35,7 +35,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     isMenu = false;
-    print("HOME SCREEN:" +Provider.of<UserData>(context, listen: false).currentUserId);
+    print("HOME SCREEN:" +
+        Provider.of<UserData>(context, listen: false).currentUserId);
     // print("HOME SCREEN:" + globals.prefs.getString('userId'));
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
@@ -266,7 +267,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   _onHotButtonPress();
                 },
                 child: Text(
-                  "Hot",
+                  "Fresh",
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     color: left,
@@ -286,7 +287,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   _onFreshButtonPress();
                 },
                 child: Text(
-                  "Fresh",
+                  "Trending",
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     color: right,
@@ -317,111 +318,116 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: FutureBuilder(
-        future: DatabaseService.getUserPosts(Provider.of<UserData>(context, listen: false).currentUserId),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
-          } 
-          else{
-            final List<Post> posts = snapshot.data;
-            return ListView.builder(
-            itemCount: posts.length,
-            itemBuilder: (_,index){
-              Post post = posts[index];
-              print(post);
-              return FutureBuilder(
-                future: DatabaseService.getUserWithId(post.opId),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Center();
-                  } 
-                  else{
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 2),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(FadeRoute(page: ViewGospel(post: post,)));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              offset: Offset(0, 3),
-                              blurRadius: 5
-                            )
-                          ]
-                          // border: Border(
-                          //   top: BorderSide(
-                          //     color: Colors.grey,
-                          //     width: 0.5
-                          //   ),
-                          //   bottom: BorderSide(
-                          //     color: Colors.grey,
-                          //     width: 0.5
-                          //   )
-                          // )
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                          child: Row(
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  LikeButton(
-                                    size: 25,
-                                    onTap: onLikeButtonTapped,
-                                  ),
-                                  Text(
-                                    post.likes.toString(),
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold
-                                    ),
-                                  )
-                                ],
+          future: DatabaseService.getUserPosts(
+              Provider.of<UserData>(context, listen: false).currentUserId),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              final List<Post> posts = snapshot.data;
+              return ListView.builder(
+                  itemCount: posts.length,
+                  itemBuilder: (_, index) {
+                    Post post = posts[index];
+                    print(post);
+                    return FutureBuilder(
+                        future: DatabaseService.getUserWithId(post.opId),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Center();
+                          } else {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 2),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(FadeRoute(
+                                      page: ViewGospel(
+                                    post: post,
+                                  )));
+                                },
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.grey,
+                                              offset: Offset(0, 3),
+                                              blurRadius: 5)
+                                        ]
+                                        // border: Border(
+                                        //   top: BorderSide(
+                                        //     color: Colors.grey,
+                                        //     width: 0.5
+                                        //   ),
+                                        //   bottom: BorderSide(
+                                        //     color: Colors.grey,
+                                        //     width: 0.5
+                                        //   )
+                                        // )
+                                        ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 10),
+                                      child: Row(
+                                        children: [
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              LikeButton(
+                                                size: 25,
+                                                onTap: onLikeButtonTapped,
+                                              ),
+                                              Text(
+                                                post.likes.toString(),
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            width: width * 0.05,
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  post.title,
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                SizedBox(
+                                                  height: width * 0.02,
+                                                ),
+                                                Text(
+                                                  post.op,
+                                                  style: TextStyle(
+                                                    color: Colors.grey,
+                                                    // fontWeight: FontWeight.bold
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )),
                               ),
-                              SizedBox(width: width*0.05,),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      post.title,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold
-                                      ),
-                                    ),
-                                    SizedBox(height: width*0.02,),
-                                    Text(
-                                      post.op,
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        // fontWeight: FontWeight.bold
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ),
-                    ),
-                  );
-                  }
-                }
-              );
+                            );
+                          }
+                        });
+                  });
             }
-          );
-          }
-        }
-      ),
+          }),
     );
   }
 
@@ -429,7 +435,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Column();
   }
 
-  Future<bool> onLikeButtonTapped(bool isLiked) async{
+  Future<bool> onLikeButtonTapped(bool isLiked) async {
     /// send your request here
     // final bool success= await sendRequest();
 

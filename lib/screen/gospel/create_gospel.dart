@@ -7,7 +7,6 @@ import 'package:gospel/util/app_theme.dart';
 import 'package:provider/provider.dart';
 
 class CreateGospel extends StatefulWidget {
-
   @override
   _CreateGospelState createState() => _CreateGospelState();
 }
@@ -39,18 +38,15 @@ class _CreateGospelState extends State<CreateGospel> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: AppTheme.green,
-        resizeToAvoidBottomPadding: false,
+          backgroundColor: AppTheme.green,
+          resizeToAvoidBottomPadding: false,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
             centerTitle: true,
             title: Text(
               'CREATE GOSPEL',
-              style: TextStyle(
-                color: AppTheme.blue,
-                letterSpacing: 1
-              ),
+              style: TextStyle(color: AppTheme.blue, letterSpacing: 1),
             ),
             leading: IconButton(
               onPressed: () => Navigator.pop(context),
@@ -65,32 +61,29 @@ class _CreateGospelState extends State<CreateGospel> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 35,vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
                   child: Container(
-                    height: height*0.25,
+                    height: height * 0.25,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: AppTheme.blue.withOpacity(0.8)
-                    ),
+                        borderRadius: BorderRadius.circular(6),
+                        color: AppTheme.blue.withOpacity(0.8)),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: TextFormField(
                         controller: _textEditingController,
                         maxLines: 10,
                         maxLength: 180,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white
-                        ),
+                        style: TextStyle(fontSize: 16, color: Colors.white),
                         keyboardType: TextInputType.text,
                         cursorColor: Colors.white,
                         decoration: InputDecoration(
+                          labelText: 'Write the title here',
+                          labelStyle: TextStyle(color: Color(0xff00ffa4)),
                           border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                          helperStyle: TextStyle(
-                            fontSize: 14,
-                            color: Colors.white
-                          ),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                          helperStyle:
+                              TextStyle(fontSize: 14, color: Colors.white),
                         ),
                       ),
                     ),
@@ -108,80 +101,75 @@ class _CreateGospelState extends State<CreateGospel> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.0,
-                  ),
-                  child: Column(
-                    children: [
-                      for(int i=0;i<rules.length;i++)
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.check_circle,
-                                size: 17,
-                                color: AppTheme.blue
-                              ),
-                              SizedBox(width: width*0.02,),
-                              Expanded(
-                                child: Text(
-                                  rules[i],
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: AppTheme.blue
-                                  ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                    ),
+                    child: Column(
+                      children: [
+                        for (int i = 0; i < rules.length; i++)
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 2),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(Icons.check_circle,
+                                    size: 17, color: AppTheme.blue),
+                                SizedBox(
+                                  width: width * 0.02,
                                 ),
-                              )
-                            ],
-                          ),
-                        ),
-                      SizedBox(height: height*0.12,),
-                      GestureDetector(
-                        onTap: _submit,
-                        child: Container(
-                          width: height*0.08,
-                          height: height*0.08,
-                          decoration: BoxDecoration(
-                            color: AppTheme.blue,
-                            shape: BoxShape.circle
-                          ),
-                          child: _isLoading
-                          ? Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: CircularProgressIndicator(
-                              valueColor: new AlwaysStoppedAnimation<Color>(AppTheme.green),
+                                Expanded(
+                                  child: Text(
+                                    rules[i],
+                                    style: TextStyle(
+                                        fontSize: 15, color: AppTheme.blue),
+                                  ),
+                                )
+                              ],
                             ),
-                          )
-                          : Icon(
-                            Icons.arrow_forward_ios,
-                            size: 18,
-                            color: Colors.white,
-                          )
+                          ),
+                        SizedBox(
+                          height: height * 0.09,
                         ),
-                      ),
-                      SizedBox(height: height*0.01,),
-                      Text(
-                        'POST',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppTheme.blue
+                        GestureDetector(
+                          onTap: _submit,
+                          child: Container(
+                              width: height * 0.08,
+                              height: height * 0.08,
+                              decoration: BoxDecoration(
+                                  color: AppTheme.blue, shape: BoxShape.circle),
+                              child: _isLoading
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            new AlwaysStoppedAnimation<Color>(
+                                                AppTheme.green),
+                                      ),
+                                    )
+                                  : Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 18,
+                                      color: Colors.white,
+                                    )),
                         ),
-                      ),
-                    ],
-                  )
-                ),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
+                        Text(
+                          'POST',
+                          style: TextStyle(fontSize: 16, color: AppTheme.blue),
+                        ),
+                      ],
+                    )),
               ],
             ),
-          )
-        ),
+          )),
     );
   }
 
   _submit() async {
     print("Inside submit");
-    if (_textEditingController.text.length>0) {
+    if (_textEditingController.text.length > 0) {
       setState(() {
         _isLoading = true;
       });

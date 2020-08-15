@@ -5,7 +5,7 @@ import 'package:share/share.dart';
 
 class DrawerScreen extends StatefulWidget {
   final BuildContext context;
-  
+
   DrawerScreen(this.context);
 
   @override
@@ -13,49 +13,26 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
-  final String imageUrl =
-      "https://celebritypets.net/wp-content/uploads/2016/12/Adriana-Lima.jpg";
+  final String imageUrl = "https://i.stack.imgur.com/34AD2.jpg";
 
-    List<MenuItem> options;
+  List<MenuItem> options;
 
   @override
   void initState() {
     super.initState();
     options = [
-    MenuItem(
-      icon: Icons.search, 
-      title: 'Search',
-      onTap: (){}
-    ),
-    MenuItem(
-      icon: Icons.info, 
-      title: 'About Us',
-      onTap: (){}
-    ),
-    MenuItem(
-      icon: Icons.favorite, 
-      title: 'Spread the Gospel',
-      onTap: _share
-    ),
-    MenuItem(
-      icon: Icons.code, 
-      title: 'License',
-      onTap: (){}
-    ),
-    MenuItem(
-      icon: Icons.rate_review, 
-      title: 'Rate Us',
-      onTap: (){}
-    ),
-  ];
+      MenuItem(icon: Icons.favorite, title: 'Spread the Gospel', onTap: _share),
+      MenuItem(icon: Icons.search, title: 'College', onTap: () {}),
+      MenuItem(icon: Icons.info, title: 'About Us', onTap: () {}),
+      MenuItem(icon: Icons.code, title: 'License', onTap: () {}),
+      MenuItem(icon: Icons.rate_review, title: 'Rate Us', onTap: () {}),
+    ];
   }
 
-  _share(){
+  _share() {
     final RenderBox box = widget.context.findRenderObject();
-    Share.share(
-      'Checkout the Gospel App!',
-      sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size
-    );
+    Share.share('Checkout the Gospel App!',
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }
 
   @override
@@ -80,23 +57,19 @@ class _DrawerScreenState extends State<DrawerScreen> {
             Row(
               children: <Widget>[
                 Container(
-                  height: height*0.2,
-                  width: height*0.2,
+                  height: height * 0.15,
+                  width: height * 0.15,
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 2
-                    ),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(imageUrl)
-                    )
-                  ),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 2),
+                      image: DecorationImage(
+                          fit: BoxFit.cover, image: NetworkImage(imageUrl))),
                 ),
-                SizedBox(width: height*0.02,),
+                SizedBox(
+                  width: height * 0.02,
+                ),
                 Text(
-                  'Tatiana',
+                  'User 2365',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
